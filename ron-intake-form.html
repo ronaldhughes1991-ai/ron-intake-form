@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Services — Ron Hughes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #1B2A4A;
+      --navy-mid:  #2E4C7E;
+      --navy-lt:   #3D6199;
+      --gold:      #C9A84C;
+      --surface:   #FFFFFF;
+      --bg:        #F4F6F9;
+      --muted:     #6B7280;
+      --border:    #DDE2EA;
+      --text:      #1A1A1A;
+      --success:   #10B981;
+      --error:     #EF4444;
+
+      --sp-xs: 0.5rem;
+      --sp-sm: 1rem;
+      --sp-md: 1.5rem;
+      --sp-lg: 2.5rem;
+      --sp-xl: 4rem;
+
+      --sh-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+      --sh-md: 0 4px 16px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+      --sh-lg: 0 20px 48px rgba(0,0,0,.13), 0 8px 16px rgba(0,0,0,.07);
+
+      --radius: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── HERO BAND ── */
+    .hero {
+      background: var(--navy);
+      padding: var(--sp-lg) var(--sp-md);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(46,76,126,.55) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--sp-sm);
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: var(--sp-sm);
+    }
+    .hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,.72);
+      max-width: 480px;
+      margin: 0 auto var(--sp-lg);
+      font-weight: 300;
+    }
+
+    /* ── SERVICE PILLS ── */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-xs);
+      justify-content: center;
+      margin-bottom: 0;
+    }
+    .pill {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 100px;
+      padding: .35rem 1rem;
+      font-size: .78rem;
+      color: rgba(255,255,255,.85);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── FORM CARD ── */
+    .form-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--sp-lg) var(--sp-md) var(--sp-xl);
+    }
+    .form-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--sh-lg);
+      overflow: hidden;
+    }
+
+    /* ── SECTION BLOCKS ── */
+    .form-section {
+      padding: var(--sp-lg);
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: var(--sp-md);
+    }
+    .section-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: .01em;
+    }
+
+    /* ── FIELD GROUPS ── */
+    .field-grid {
+      display: grid;
+      gap: var(--sp-md);
+      grid-template-columns: 1fr;
+    }
+    .field-grid.two { grid-template-columns: 1fr 1fr; }
+
+    @media (max-width: 540px) {
+      .field-grid.two { grid-template-columns: 1fr; }
+      .form-section { padding: var(--sp-md); }
+    }
+
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    .field label {
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: .01em;
+    }
+    .field label .opt {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: .78rem;
+      margin-left: .3rem;
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=tel],
+    input[type=url],
+    textarea,
+    select {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      color: var(--text);
+      background: #fff;
+      transition: border-color .18s, box-shadow .18s;
+      outline: none;
+      appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--navy-mid);
+      box-shadow: 0 0 0 3px rgba(46,76,126,.12);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .9rem center;
+      padding-right: 2.2rem;
+      cursor: pointer;
+    }
+
+    /* ── SERVICE CARDS ── */
+    .service-cards {
+      display: grid;
+      gap: var(--sp-sm);
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 540px) { .service-cards { grid-template-columns: 1fr; } }
+
+    .service-card {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--sp-sm) var(--sp-md);
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+      position: relative;
+    }
+    .service-card:hover {
+      border-color: var(--navy-mid);
+      box-shadow: var(--sh-sm);
+    }
+    .service-card input[type=radio] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+    .service-card.selected {
+      border-color: var(--navy);
+      background: #F0F4FA;
+      box-shadow: 0 0 0 2px rgba(27,42,74,.15);
+    }
+    .service-card.featured {
+      border-color: var(--gold);
+    }
+    .card-badge {
+      display: inline-block;
+      font-size: .67rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #fff;
+      padding: .18rem .55rem;
+      border-radius: 100px;
+      margin-bottom: .5rem;
+    }
+    .card-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: .2rem;
+    }
+    .card-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: .2rem;
+    }
+    .card-desc {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FILE UPLOAD ── */
+    .file-drop {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: var(--sp-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .18s, background .18s;
+    }
+    .file-drop:hover, .file-drop.active {
+      border-color: var(--navy-mid);
+      background: #F0F4FA;
+    }
+    .file-drop input { display: none; }
+    .file-icon {
+      font-size: 2rem;
+      margin-bottom: .5rem;
+      opacity: .5;
+    }
+    .file-drop p {
+      font-size: .88rem;
+      color: var(--muted);
+      margin-bottom: .3rem;
+    }
+    .file-drop .file-hint {
+      font-size: .75rem;
+      color: var(--border);
+    }
+    .file-name {
+      margin-top: .75rem;
+      font-size: .82rem;
+      color: var(--navy);
+      font-weight: 500;
+      display: none;
+    }
+
+    /* ── CHECKBOX ── */
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      cursor: pointer;
+    }
+    .checkbox-row input[type=checkbox] {
+      width: 18px; height: 18px;
+      min-width: 18px;
+      margin-top: .15rem;
+      accent-color: var(--navy);
+      cursor: pointer;
+    }
+    .checkbox-row span {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .checkbox-row span strong { color: var(--navy); }
+
+    /* ── SUBMIT ── */
+    .submit-section {
+      padding: var(--sp-lg);
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .btn-submit {
+      width: 100%;
+      padding: .9rem var(--sp-md);
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: background .18s, transform .12s, box-shadow .18s;
+      box-shadow: 0 4px 14px rgba(27,42,74,.35);
+    }
+    .btn-submit:hover {
+      background: var(--navy-mid);
+      box-shadow: 0 6px 20px rgba(27,42,74,.40);
+      transform: translateY(-1px);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .submit-note {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .75rem;
+    }
+
+    /* ── THANK YOU ── */
+    .thankyou {
+      display: none;
+      padding: var(--sp-xl) var(--sp-lg);
+      text-align: center;
+    }
+    .thankyou.show { display: block; }
+    .thankyou-icon { font-size: 3rem; margin-bottom: var(--sp-sm); }
+    .thankyou h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin-bottom: var(--sp-sm);
+    }
+    .thankyou p { color: var(--muted); max-width: 400px; margin: 0 auto; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: var(--sp-md);
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    /* ── ERROR STATE ── */
+    .field-error {
+      font-size: .75rem;
+      color: var(--error);
+      display: none;
+    }
+    .field.invalid input,
+    .field.invalid textarea,
+    .field.invalid select {
+      border-color: var(--error);
+    }
+    .field.invalid .field-error { display: block; }
+
+    /* ── VETERAN BANNER ── */
+    .vet-banner {
+      background: linear-gradient(135deg, #1B2A4A 0%, #2E4C7E 100%);
+      border-radius: 8px;
+      padding: var(--sp-sm) var(--sp-md);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      margin-bottom: var(--sp-md);
+    }
+    .vet-banner-icon { font-size: 1.5rem; }
+    .vet-banner-text { color: #fff; font-size: .85rem; }
+    .vet-banner-text strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">Professional Resume Services</span>
+      <h1>Ron Hughes<br/>Resume Services</h1>
+      <p>Your experience is real. Let's make sure the page reflects it.</p>
+      <div class="pills">
+        <div class="pill"><span class="pill-dot"></span>24hr Turnaround</div>
+        <div class="pill"><span class="pill-dot"></span>Veterans Always Free</div>
+        <div class="pill"><span class="pill-dot"></span>ATS Optimized</div>
+        <div class="pill"><span class="pill-dot"></span> Tailored to Your Roles</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FORM WRAP -->
+  <main class="form-wrap">
+    <div class="form-card">
+
+      <form id="intakeForm" action="https://formspree.io/f/xlgkegey" method="POST" enctype="multipart/form-data" novalidate>
+
+        <!-- 1. CONTACT INFO -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">1</span>
+            <span class="section-title">Contact Information</span>
+          </div>
+          <div class="field-grid two">
+            <div class="field" id="field-name">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required />
+              <span class="field-error">Please enter your full name.</span>
+            </div>
+            <div class="field" id="field-email">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+              <span class="field-error">Please enter a valid email.</span>
+            </div>
+            <div class="field">
+              <label for="phone">Phone <span class="opt">(optional)</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+            </div>
+            <div class="field">
+              <label for="linkedin">LinkedIn URL <span class="opt">(optional)</span></label>
+              <input type="url" id="linkedin" name="linkedin" placeholder="linkedin.com/in/yourprofile" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. BACKGROUND -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">2</span>
+            <span class="section-title">Your Background</span>
+          </div>
+          <div class="field-grid two">
+            <div class="field" id="field-title">
+              <label for="job_title">Current or Most Recent Job Title</label>
+              <input type="text" id="job_title" name="job_title" placeholder="e.g. Operations Manager" required />
+              <span class="field-error">Please enter your job title.</span>
+            </div>
+            <div class="field" id="field-industry">
+              <label for="industry">Industry</label>
+              <input type="text" id="industry" name="industry" placeholder="e.g. Oil & Gas, Healthcare, IT" required />
+              <span class="field-error">Please enter your industry.</span>
+            </div>
+            <div class="field" id="field-experience">
+              <label for="experience">Years of Experience</label>
+              <select id="experience" name="experience" required>
+                <option value="" disabled selected>Select range</option>
+                <option>Less than 2 years</option>
+                <option>2 to 5 years</option>
+                <option>6 to 10 years</option>
+                <option>11 to 20 years</option>
+                <option>20+ years</option>
+              </select>
+              <span class="field-error">Please select your experience range.</span>
+            </div>
+            <div class="field" id="field-veteran">
+              <label for="veteran">Are you a U.S. Military Veteran?</label>
+              <select id="veteran" name="veteran" required>
+                <option value="" disabled selected>Select</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+              <span class="field-error">Please select an option.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. TARGET ROLES -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">3</span>
+            <span class="section-title">What You're Targeting</span>
+          </div>
+          <div class="field-grid">
+            <div class="field" id="field-target_roles">
+              <label for="target_roles">What roles are you applying for?</label>
+              <input type="text" id="target_roles" name="target_roles" placeholder="e.g. Operations Manager, Security Supervisor" required />
+              <span class="field-error">Please enter the roles you're targeting.</span>
+            </div>
+            <div class="field">
+              <label for="target_companies">Target companies or industries <span class="opt">(optional)</span></label>
+              <input type="text" id="target_companies" name="target_companies" placeholder="e.g. Chevron, ExxonMobil, federal government" />
+            </div>
+            <div class="field" id="field-location">
+              <label for="location">Preferred Work Location</label>
+              <select id="location" name="location" required>
+                <option value="" disabled selected>Select</option>
+                <option>Specific city or region</option>
+                <option>Remote</option>
+                <option>Open to anything</option>
+              </select>
+              <span class="field-error">Please select a location preference.</span>
+            </div>
+            <div class="field">
+              <label for="location_detail">If specific location, where? <span class="opt">(optional)</span></label>
+              <input type="text" id="location_detail" name="location_detail" placeholder="e.g. Houston TX, Permian Basin" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. SERVICE SELECTION -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">4</span>
+            <span class="section-title">Select Your Service</span>
+          </div>
+
+          <div class="vet-banner">
+            <span class="vet-banner-icon">🎖️</span>
+            <span class="vet-banner-text"><strong>Veterans receive all services free of charge.</strong> If you served, select the service you need and note your branch in the additional info section.</span>
+          </div>
+
+          <div class="service-cards" id="serviceCards">
+            <label class="service-card" onclick="selectCard(this)">
+              <input type="radio" name="service" value="Resume Critique Only (Free)" />
+              <div class="card-title">Resume Critique</div>
+              <div class="card-price">Free</div>
+              <div class="card-desc">Initial feedback and suggestions. No rewrite included.</div>
+            </label>
+            <label class="service-card featured" onclick="selectCard(this)">
+              <input type="radio" name="service" value="Full Resume Rewrite ($100)" />
+              <span class="card-badge">Most Popular</span>
+              <div class="card-title">Full Resume Rewrite</div>
+              <div class="card-price">$100</div>
+              <div class="card-desc">Complete rebuild. ATS optimized. Delivered in 24 hours.</div>
+            </label>
+            <label class="service-card" onclick="selectCard(this)">
+              <input type="radio" name="service" value="Resume + Cover Letter ($150)" />
+              <div class="card-title">Resume + Cover Letter</div>
+              <div class="card-price">$150</div>
+              <div class="card-desc">Full rewrite plus a targeted cover letter. 24hr turnaround.</div>
+            </label>
+            <label class="service-card" onclick="selectCard(this)">
+              <input type="radio" name="service" value="Executive Rewrite ($250)" />
+              <div class="card-title">Executive Rewrite</div>
+              <div class="card-price">$250</div>
+              <div class="card-desc">Director level and above. Includes a discovery call before I start.</div>
+            </label>
+          </div>
+          <div id="service-error" style="font-size:.75rem;color:var(--error);margin-top:.5rem;display:none;">Please select a service.</div>
+        </div>
+
+        <!-- 5. RESUME UPLOAD -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">5</span>
+            <span class="section-title">Upload Your Resume</span>
+          </div>
+          <div class="file-drop" id="fileDrop" onclick="document.getElementById('resume_file').click()">
+            <input type="file" id="resume_file" name="resume_file" accept=".pdf,.doc,.docx" />
+            <div class="file-icon">📄</div>
+            <p>Click to upload or drag and drop</p>
+            <p class="file-hint">PDF or Word document accepted</p>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+
+        <!-- 6. ADDITIONAL INFO -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">6</span>
+            <span class="section-title">Anything Else I Should Know</span>
+          </div>
+          <div class="field">
+            <label for="additional">Career goals, struggles, context <span class="opt">(optional)</span></label>
+            <textarea id="additional" name="additional" placeholder="Tell me what you've been struggling with, what kinds of roles you want to land, or anything else that would help me understand your situation..."></textarea>
+          </div>
+        </div>
+
+        <!-- 7. PAYMENT ACKNOWLEDGMENT -->
+        <div class="form-section">
+          <div class="section-label">
+            <span class="section-num">7</span>
+            <span class="section-title">Payment Acknowledgment</span>
+          </div>
+          <label class="checkbox-row" id="ack-row">
+            <input type="checkbox" id="acknowledge" name="acknowledge" value="Confirmed" required />
+            <span>I understand that <strong>payment is required upfront</strong> before any work begins. Veterans receive all services at no charge. Once I submit this form, Ron will reach out with payment details within 24 hours.</span>
+          </label>
+          <div id="ack-error" style="font-size:.75rem;color:var(--error);margin-top:.5rem;display:none;">You must acknowledge the payment policy to continue.</div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="submit-section">
+          <button type="submit" class="btn-submit" id="submitBtn">Submit — Let's Get Started</button>
+          <p class="submit-note">You'll hear back within 24 hours. Payment details will be sent before any work begins.</p>
+        </div>
+
+      </form>
+
+      <!-- THANK YOU STATE -->
+      <div class="thankyou" id="thankyou">
+        <div class="thankyou-icon">✅</div>
+        <h2>You're in the pipeline.</h2>
+        <p>I'll review what you submitted and reach out within 24 hours with next steps and payment details.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    Ron Hughes Resume Services &nbsp;|&nbsp; Veterans Always Free &nbsp;|&nbsp; 24hr Turnaround
+  </footer>
+
+  <script>
+    // Service card selection
+    function selectCard(el) {
+      document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('service-error').style.display = 'none';
+    }
+
+    // File drop
+    const fileDrop = document.getElementById('fileDrop');
+    const fileInput = document.getElementById('resume_file');
+    const fileName = document.getElementById('fileName');
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        fileName.textContent = fileInput.files[0].name;
+        fileName.style.display = 'block';
+        fileDrop.classList.add('active');
+      }
+    });
+
+    fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('active'); });
+    fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('active'));
+    fileDrop.addEventListener('drop', e => {
+      e.preventDefault();
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        fileName.textContent = e.dataTransfer.files[0].name;
+        fileName.style.display = 'block';
+        fileDrop.classList.add('active');
+      }
+    });
+
+    // Form validation and submit
+    const form = document.getElementById('intakeForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      // Required text/select fields
+      ['name','email','job_title','industry','experience','veteran','target_roles','location'].forEach(id => {
+        const el = document.getElementById(id);
+        const wrapper = el.closest('.field');
+        if (!el.value.trim()) {
+          wrapper.classList.add('invalid');
+          valid = false;
+        } else {
+          wrapper.classList.remove('invalid');
+        }
+      });
+
+      // Service selection
+      const serviceSelected = document.querySelector('.service-card.selected input');
+      if (!serviceSelected) {
+        document.getElementById('service-error').style.display = 'block';
+        valid = false;
+      }
+
+      // Acknowledge
+      if (!document.getElementById('acknowledge').checked) {
+        document.getElementById('ack-error').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('ack-error').style.display = 'none';
+      }
+
+      if (!valid) return;
+
+      // Submit
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('thankyou').classList.add('show');
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Submit — Let\'s Get Started';
+          alert('Something went wrong. Please try again or reach out directly on LinkedIn.');
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Submit — Let\'s Get Started';
+        alert('Something went wrong. Please try again or reach out directly on LinkedIn.');
+      }
+    });
+
+    // Clear validation on input
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      el.addEventListener('input', () => el.closest('.field')?.classList.remove('invalid'));
+    });
+  </script>
+</body>
+</html>
