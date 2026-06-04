@@ -276,41 +276,21 @@
       line-height: 1.5;
     }
 
-    /* ── FILE UPLOAD ── */
-    .file-drop {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: var(--sp-lg);
-      text-align: center;
-      cursor: pointer;
-      transition: border-color .18s, background .18s;
-    }
-    .file-drop:hover, .file-drop.active {
-      border-color: var(--navy-mid);
+    /* ── INFO NOTE ── */
+    .info-note {
       background: #F0F4FA;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--navy-mid);
+      border-radius: 8px;
+      padding: var(--sp-sm) var(--sp-md);
+      margin-bottom: var(--sp-md);
     }
-    .file-drop input { display: none; }
-    .file-icon {
-      font-size: 2rem;
-      margin-bottom: .5rem;
-      opacity: .5;
-    }
-    .file-drop p {
-      font-size: .88rem;
-      color: var(--muted);
-      margin-bottom: .3rem;
-    }
-    .file-drop .file-hint {
-      font-size: .75rem;
-      color: var(--border);
-    }
-    .file-name {
-      margin-top: .75rem;
-      font-size: .82rem;
+    .info-note p {
+      font-size: .85rem;
       color: var(--navy);
-      font-weight: 500;
-      display: none;
+      line-height: 1.55;
     }
+    .info-note strong { color: var(--navy); }
 
     /* ── CHECKBOX ── */
     .checkbox-row {
@@ -386,7 +366,7 @@
       color: var(--navy);
       margin-bottom: var(--sp-sm);
     }
-    .thankyou p { color: var(--muted); max-width: 400px; margin: 0 auto; }
+    .thankyou p { color: var(--muted); max-width: 420px; margin: 0 auto; }
 
     /* ── FOOTER ── */
     .footer {
@@ -436,7 +416,7 @@
         <div class="pill"><span class="pill-dot"></span>24hr Turnaround</div>
         <div class="pill"><span class="pill-dot"></span>Veterans Always Free</div>
         <div class="pill"><span class="pill-dot"></span>ATS Optimized</div>
-        <div class="pill"><span class="pill-dot"></span> Tailored to Your Roles</div>
+        <div class="pill"><span class="pill-dot"></span>Tailored to Your Roles</div>
       </div>
     </div>
   </header>
@@ -445,7 +425,7 @@
   <main class="form-wrap">
     <div class="form-card">
 
-      <form id="intakeForm" action="https://formspree.io/f/xlgkegey" method="POST" enctype="multipart/form-data" novalidate>
+      <form id="intakeForm" action="https://formspree.io/f/xlgkegey" method="POST" novalidate>
 
         <!-- 1. CONTACT INFO -->
         <div class="form-section">
@@ -591,18 +571,18 @@
           <div id="service-error" style="font-size:.75rem;color:var(--error);margin-top:.5rem;display:none;">Please select a service.</div>
         </div>
 
-        <!-- 5. RESUME UPLOAD -->
+        <!-- 5. YOUR RESUME -->
         <div class="form-section">
           <div class="section-label">
             <span class="section-num">5</span>
-            <span class="section-title">Upload Your Resume</span>
+            <span class="section-title">Your Current Resume</span>
           </div>
-          <div class="file-drop" id="fileDrop" onclick="document.getElementById('resume_file').click()">
-            <input type="file" id="resume_file" name="resume_file" accept=".pdf,.doc,.docx" />
-            <div class="file-icon">📄</div>
-            <p>Click to upload or drag and drop</p>
-            <p class="file-hint">PDF or Word document accepted</p>
-            <div class="file-name" id="fileName"></div>
+          <div class="info-note">
+            <p><strong>After you submit this form, I'll reply by email and you can send your current resume as an attachment.</strong> If your resume is already online, you can paste a link below (Google Drive, Dropbox, or LinkedIn). This is optional.</p>
+          </div>
+          <div class="field">
+            <label for="resume_link">Link to your resume <span class="opt">(optional)</span></label>
+            <input type="url" id="resume_link" name="resume_link" placeholder="https://drive.google.com/..." />
           </div>
         </div>
 
@@ -626,7 +606,7 @@
           </div>
           <label class="checkbox-row" id="ack-row">
             <input type="checkbox" id="acknowledge" name="acknowledge" value="Confirmed" required />
-            <span>I understand that <strong>payment is required upfront</strong> before any work begins. Veterans receive all services at no charge. Once I submit this form, Ron will reach out with payment details within 24 hours.</span>
+            <span>I understand that <strong>payment is required before the final resume is delivered.</strong> Veterans receive all services at no charge. Once I submit this form, Ron will reach out within 24 hours with next steps.</span>
           </label>
           <div id="ack-error" style="font-size:.75rem;color:var(--error);margin-top:.5rem;display:none;">You must acknowledge the payment policy to continue.</div>
         </div>
@@ -634,7 +614,7 @@
         <!-- SUBMIT -->
         <div class="submit-section">
           <button type="submit" class="btn-submit" id="submitBtn">Submit — Let's Get Started</button>
-          <p class="submit-note">You'll hear back within 24 hours. Payment details will be sent before any work begins.</p>
+          <p class="submit-note">You'll hear back within 24 hours.</p>
         </div>
 
       </form>
@@ -643,7 +623,7 @@
       <div class="thankyou" id="thankyou">
         <div class="thankyou-icon">✅</div>
         <h2>You're in the pipeline.</h2>
-        <p>I'll review what you submitted and reach out within 24 hours with next steps and payment details.</p>
+        <p>I'll review what you submitted and reach out within 24 hours with next steps. Check your email, that's where I'll ask you to send your current resume.</p>
       </div>
 
     </div>
@@ -661,38 +641,12 @@
       document.getElementById('service-error').style.display = 'none';
     }
 
-    // File drop
-    const fileDrop = document.getElementById('fileDrop');
-    const fileInput = document.getElementById('resume_file');
-    const fileName = document.getElementById('fileName');
-
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length) {
-        fileName.textContent = fileInput.files[0].name;
-        fileName.style.display = 'block';
-        fileDrop.classList.add('active');
-      }
-    });
-
-    fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('active'); });
-    fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('active'));
-    fileDrop.addEventListener('drop', e => {
-      e.preventDefault();
-      if (e.dataTransfer.files.length) {
-        fileInput.files = e.dataTransfer.files;
-        fileName.textContent = e.dataTransfer.files[0].name;
-        fileName.style.display = 'block';
-        fileDrop.classList.add('active');
-      }
-    });
-
     // Form validation and submit
     const form = document.getElementById('intakeForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       let valid = true;
 
-      // Required text/select fields
       ['name','email','job_title','industry','experience','veteran','target_roles','location'].forEach(id => {
         const el = document.getElementById(id);
         const wrapper = el.closest('.field');
@@ -704,14 +658,12 @@
         }
       });
 
-      // Service selection
       const serviceSelected = document.querySelector('.service-card.selected input');
       if (!serviceSelected) {
         document.getElementById('service-error').style.display = 'block';
         valid = false;
       }
 
-      // Acknowledge
       if (!document.getElementById('acknowledge').checked) {
         document.getElementById('ack-error').style.display = 'block';
         valid = false;
@@ -721,7 +673,6 @@
 
       if (!valid) return;
 
-      // Submit
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.textContent = 'Submitting...';
@@ -734,17 +685,16 @@
           document.getElementById('thankyou').classList.add('show');
         } else {
           btn.disabled = false;
-          btn.textContent = 'Submit — Let\'s Get Started';
+          btn.textContent = "Submit — Let's Get Started";
           alert('Something went wrong. Please try again or reach out directly on LinkedIn.');
         }
       } catch {
         btn.disabled = false;
-        btn.textContent = 'Submit — Let\'s Get Started';
+        btn.textContent = "Submit — Let's Get Started";
         alert('Something went wrong. Please try again or reach out directly on LinkedIn.');
       }
     });
 
-    // Clear validation on input
     document.querySelectorAll('input, select, textarea').forEach(el => {
       el.addEventListener('input', () => el.closest('.field')?.classList.remove('invalid'));
     });
